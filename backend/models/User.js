@@ -20,10 +20,10 @@ const userSchema = new mongoose.Schema({
         required: true // This field is mandatory
     },
     // The 'Blog' field is an array that stores references to Blog documents
-    Blog: [
+    blog: [
         {
             type: mongoose.Types.ObjectId, // Data type for the field (ObjectId)
-            ref: "Blog" // Reference to the Blog model (collection)
+            ref: "Post" // Reference to the Blog model (collection)
         }
     ]
 });

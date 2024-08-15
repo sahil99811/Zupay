@@ -9,9 +9,9 @@ const commentSchema = new mongoose.Schema({
         required: true // This field is mandatory
     },
     // The 'blog' field stores a reference to the associated Blog post and is required
-    blog: {
+    post: {
         type: mongoose.Types.ObjectId, // Data type for the field (ObjectId)
-        ref: "Blog", // Reference to the Blog model (collection)
+        ref: "Post", // Reference to the Blog model (collection)
         required: true // This field is mandatory
     },
     // The 'author' field stores a reference to the User who made the comment and is required

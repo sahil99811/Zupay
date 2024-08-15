@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 // Define the Blog schema using Mongoose's Schema class
-const blogSchema = new mongoose.Schema({
+const postSchema = new mongoose.Schema({
    
     // The 'title' field stores the title of the blog post and is required
     title: {
@@ -23,11 +23,6 @@ const blogSchema = new mongoose.Schema({
     like: {
         type: Number, // Data type for the field
         default: 0 // Default value is 0, meaning no likes initially
-    },
-    // The 'impression' field tracks the number of impressions (views) the blog post has
-    impression: {
-        type: Number, // Data type for the field
-        default: 0 // Default value is 0, meaning no impressions initially
     },
     // The 'comments' field is an array that stores references to Comment documents
     comments: [
@@ -53,4 +48,4 @@ const blogSchema = new mongoose.Schema({
 });
 
 // Export the Blog model, making it available for use in other parts of the application
-module.exports = mongoose.model("Blog", blogSchema);
+module.exports = mongoose.model("Post", postSchema);
