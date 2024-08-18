@@ -1,6 +1,6 @@
 const express = require('express'); // Import the Express module
 const router = express.Router(); // Create a new router object
-const { login, signup } = require('../controllers/Auth'); // Import the login and signup controller functions
+const { login, signup } = require('../contollers/Auth'); // Import the login and signup controller functions
 
 // Route for user login
 router.post('/login', login); // POST request to /login will trigger the login function
