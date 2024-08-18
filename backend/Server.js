@@ -3,8 +3,14 @@ const express = require('express'); // Express is a web framework for Node.js
 const app = express(); // Create an instance of the Express application
 const dotenv = require('dotenv'); // dotenv is used to load environment variables from a .env file
 const { dbConnect } = require('./config/dbConnect'); // Import the database connection function
-
+const authRoutes=require('./routes/Auth');
 dotenv.config(); // Load environment variables from the .env file into process.env
+app.use(express.json()); // Middleware to parse JSON bodies
+
+// Use CORS middleware
+app.use(cors());
+// Use authentication routes, prefixed with /api/v1/auth
+app.use('/api/v1/auth', authRoutes);
 
 // Connect to the database
 dbConnect()
