@@ -2,9 +2,12 @@ import  { useState } from 'react';
 import style from '../../styles/components/auth/LoginForm.module.css';
 import validator from "validator";
 import toast from 'react-hot-toast';
-
+import {login} from '../../services/Auth'
+import { useDispatch } from 'react-redux';
+import {setToken} from '../../slices/authSlice'
 // Component for login form
 export default function LoginForm() {
+  const dispatch=useDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -22,17 +25,22 @@ export default function LoginForm() {
   // Function to handle form submission
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    // Validating email format
+    if(!formData.email||!formData.password){
+      toast.error("Please enter all field");
+      return;
+    }
     if (!validator.isEmail(formData.email)) {
       toast.error("Please enter a valid email");
       return;
+    }
+    const result=await login(formData);
+    if(result){
+      dispatch(setToken(result))
     }
   };
 
   return (
     <>
-      {/* Display loading indicator while loading */}
-      {/* {loading && <p style={{ "position": "absolute", "marginTop": "-1.5rem", "fontSize": "2rem" }}>Loading...</p>} */}
       {/* Login form */}
       <form className={style.container} onSubmit={onSubmitHandler}>
         <div className={style.inputContainer}>

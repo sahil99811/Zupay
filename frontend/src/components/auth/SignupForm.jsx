@@ -2,7 +2,7 @@ import { useState } from 'react';
 import style from '../../styles/components/auth/SignupForm.module.css'; 
 import formValidation from '../../utility/formValidation'; 
 import toast from 'react-hot-toast';
-
+import { signup } from '../../services/Auth';
 // Component for signup form
 export default function SignupForm() {
     const [signupData, setSignupData] = useState({ 
@@ -47,7 +47,15 @@ export default function SignupForm() {
 
         // If no validation errors, call signup API
         if (!validationErrors.name && !validationErrors.email && !validationErrors.password && !validationErrors.confirmpassword) {
-           console.log("form submitted");
+           const result=await signup(signupData);
+           if(result){
+            setSignupData({ 
+                name: "",
+                email: "",
+                password: "",
+                confirmpassword: ""
+            })
+           }
         }
     };
 
