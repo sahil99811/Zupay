@@ -1,16 +1,17 @@
 // Fetch trending and popular posts
-const getPosts = async (req, res) => {
+ const getPosts = async (req, res) => {
     try {
         const trendingPosts = await Post.find({})
             .select("title like impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" })
             .sort({ impression: -1 })
-            .limit(5);
+            .limit(10);
 
         const popularPosts = await Post.find({})
             .select("title content like impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" })
-            .sort({ like: -1 });
+            .sort({ like: -1 })
+            .limit(10)
 
         res.status(200).json({
             success:true,
@@ -23,29 +24,32 @@ const getPosts = async (req, res) => {
     }
 };
 
-const getUserPosts=async (req,res)=>{
-    try{
-        const {id}=req.user;
-        const userPosts = await Post.findAll({createdBy:id})
-        .select("title content like impression thumbnail createdBy")
-        .populate({ path: "createdBy", select: "name" })
+// Fetch user-specific posts
+const getUserPosts = async (req, res) => {
+    try {
+        const { id } = req.user;
+        const userPosts = await Post.find({ createdBy: id })
+            .select("title content like impression thumbnail createdBy")
+            .populate({ path: "createdBy", select: "name" });
+        
         res.status(200).json({
-            success:true,
-            data:userPosts,
-             message:"Posts fetched successfully"
+            success: true,
+            data: userPosts,
+            message: "Posts fetched successfully"
         });
-    }catch(error){
+    } catch (error) {
         console.error("Error while fetching user posts:", error);
         return errorResponse(res, 500, "Server error while fetching posts");
     }
-}
+};
 // Fetch details of a single post by its ID
 const getPostDetails = async (req, res) => {
     try {
         const { id } = req.params;
-        await Post.findByIdAndUpdate(postid, {
-            $inc: { impression: 1 }
-        }, { new: true });
+        
+        // Increment impression count
+        await Post.findByIdAndUpdate(id, { $inc: { impression: 1 } }, { new: true });
+
         const post = await Post.findById(id)
             .select("title content category like impression thumbnail createdBy comments createdAt")
             .populate({ path: "createdBy", select: "name" })
@@ -60,16 +64,44 @@ const getPostDetails = async (req, res) => {
         }
 
         res.status(200).json({
-            success:true,
-            data:post,
-            message:"Post details fetched successfully"
+            success: true,
+            data: post,
+            message: "Post details fetched successfully"
         });
     } catch (error) {
         console.error("Error fetching post details:", error);
         return errorResponse(res, 500, "Server error");
     }
 };
+const searchPosts = async (req, res) => {
+    try {
+        const { search } = req.query;
 
+        // Check if the search query is provided
+        if (!search) {
+            return res.status(400).json({
+                success: false,
+                message: "Search query is required."
+            });
+        }
+
+        // Perform a case-insensitive search using RegExp
+        const posts = await Post.find({ title: new RegExp(search, "i") })
+            .select("title content like impression thumbnail createdBy")
+            .populate({ path: "createdBy", select: "name" });
+
+        // Respond with the fetched posts
+        res.status(200).json({
+            success: true,
+            data: posts,
+            message: "Posts fetched successfully"
+        });
+
+    } catch (error) {
+        console.error("Error fetching posts:", error);
+        return errorResponse(res, 500, "Server error");
+    }
+};
 
 // Create a new post
 const createPost = async (req, res) => {
@@ -144,3 +176,5 @@ const likePost = async (req, res) => {
 };
 
 
+
+module.exports={getPosts,getUserPosts,getPostDetails,likePost,deletePost,createPost,searchPosts}
