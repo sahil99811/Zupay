@@ -26,10 +26,14 @@ const getPosts = async (req, res) => {
 const getUserPosts=async (req,res)=>{
     try{
         const {id}=req.user;
-        const popularPosts = await Post.findAll({createdBy:id})
+        const userPosts = await Post.findAll({createdBy:id})
         .select("title content like impression thumbnail createdBy")
         .populate({ path: "createdBy", select: "name" })
-        .sort({ like: -1 });
+        res.status(200).json({
+            success:true,
+            data:userPosts,
+             message:"Posts fetched successfully"
+        });
     }catch(error){
         console.error("Error while fetching user posts:", error);
         return errorResponse(res, 500, "Server error while fetching posts");
