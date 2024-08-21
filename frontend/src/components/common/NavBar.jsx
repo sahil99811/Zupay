@@ -5,7 +5,9 @@ import style from '../../styles/components/common/NavBar.module.css';
 import navbar from '../../assets/navbar.png'
 import logo from '../../assets/logo.png'
 import searchbar from '../../assets/searchbar.png'
+import { useNavigate } from 'react-router-dom';
 const NavBar = () => {
+  const navigate=useNavigate();
   // State to track if the mobile menu is open
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
@@ -26,7 +28,12 @@ const NavBar = () => {
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
   }, []); // Empty dependency array ensures function is memoized
-
+  const onEnterHandler=(event)=>{
+    if (event.key === 'Enter') {
+      navigate('/search');
+      
+    }
+  }
   return (
     <header className={style.container}>
       {/* Header with logo and app name */}
@@ -38,7 +45,7 @@ const NavBar = () => {
           <img src={navbar} alt="Open Menu" className={style.navbarImage} />
         </button>
         </div>
-        <div className={style.inputContainer}>
+        <div className={style.inputContainer} onKeyDown={onEnterHandler}>
         <input
           type="text"
           placeholder="Search for Blogs..."

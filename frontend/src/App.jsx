@@ -8,7 +8,8 @@ import PublicRoute from './components/auth/PublicRoute';
 import AuthPage from './pages/AuthPage';
 import style from './App.module.css';
 import UserPostPage from './pages/UserPostPage';
-
+import NavBar from './components/common/NavBar';
+import { Outlet } from 'react-router-dom';
 function App() {
   return (
     <div className={style.container}>
@@ -22,14 +23,15 @@ function App() {
           } 
         />
         <Route 
-          path='/'
           element={
             <PrivateRoute>
-              <HomePage />
+              <NavBar/>
+              <Outlet />
             </PrivateRoute>
           }
         >
-          <Route path='/post/:id' element={<PostDetailsPage />} />
+          <Route path='/' element={<HomePage/>}/>
+          <Route path='/posts/:id' element={<PostDetailsPage />} />
           <Route path='/createpost' element={<AddPostPage />} />
           <Route path='/search' element={<SearchResultPage />} />
           <Route path='/posts' element={<UserPostPage/>} />

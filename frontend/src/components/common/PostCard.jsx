@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 export default function PostCard() {
   const navigate=useNavigate();
   const onClickHandler=()=>{
-    navigate("/post/123");
+    navigate("/posts/123");
   }
   return (
     <div className={style.container} onClick={onClickHandler}>

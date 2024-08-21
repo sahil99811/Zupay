@@ -1,0 +1,200 @@
+
+
+/* Container Styling */
+.formContainer {
+  margin: auto; /* mx-auto */
+  padding: 1rem; /* p-4 */
+  background-color: white; /* bg-white */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-md */
+  border-radius: 0.375rem; /* rounded-md */
+  width: 100%;
+  max-width: 640px; /* max-w-lg */
+}
+
+/* Heading */
+.heading {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 600; /* font-semibold */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Form Group */
+.formGroup {
+  margin-bottom: 1rem; /* mb-4 */
+  width: 100%;
+}
+
+/* Label */
+.label {
+  display: block;
+  color: #4a5568; /* text-gray-700 */
+}
+
+/* Select and Input */
+.select,
+.input {
+  display: block;
+  width: 100%;
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 0.375rem; /* rounded-md */
+  padding: 0.5rem; /* Adjust padding for better touch targets */
+  font-size: 0.875rem; /* sm:text-sm */
+}
+
+.content {
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+  max-height: 100px;
+}
+
+/* Focus States */
+.select:focus,
+.input:focus,
+.content:focus {
+  outline: none;
+  border-color: #6366f1; /* focus:border-indigo-500 */
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); /* focus:ring-indigo-500 */
+}
+
+/* Button */
+.button {
+  width: 100%;
+  background-color: #4f46e5; /* bg-indigo-600 */
+  color: white; /* text-white */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  border-radius: 0.375rem; /* rounded-md */
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* shadow-sm */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Button Hover and Focus */
+.button:hover {
+  background-color: #4338ca; /* hover:bg-indigo-700 */
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.5); /* focus:ring-indigo-500 */
+}
+
+/* Points Container */
+.pointsContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adds space between input and button */
+  margin-bottom: 1rem; /* mb-4 */
+}
+
+/* Points List */
+.pointsList {
+  list-style-type: none; /* Removes default list styling */
+  padding: 0; /* Removes default padding */
+  margin: 0; /* Removes default margin */
+}
+
+/* Point Item */
+.pointItem {
+  display: flex;
+  justify-content: space-between; /* Aligns point text and remove button */
+  align-items: center;
+  background-color: #f9fafb; /* bg-gray-50 */
+  border: 1px solid #e5e7eb; /* border-gray-200 */
+  border-radius: 0.375rem; /* rounded-md */
+  padding: 0.5rem; /* p-2 */
+  margin-bottom: 0.5rem; /* mb-2 */
+  font-size: 0.875rem; /* text-sm */
+}
+
+/* Remove Button */
+.removeButton {
+  background-color: #ef4444; /* bg-red-500 */
+  color: white; /* text-white */
+  border: none;
+  border-radius: 0.375rem; /* rounded-md */
+  padding: 0.25rem 0.5rem; /* py-1 px-2 */
+  font-size: 0.75rem; /* text-xs */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.removeButton:hover {
+  background-color: #dc2626; /* hover:bg-red-600 */
+}
+
+/* Add Button */
+.addButton {
+  background-color: #10b981; /* bg-green-500 */
+  color: white; /* text-white */
+  padding: 0.5rem 1rem; /* py-2 px-4 */
+  border-radius: 0.375rem; /* rounded-md */
+  font-size: 0.875rem; /* text-sm */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.addButton:hover {
+  background-color: #059669; /* hover:bg-green-600 */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) { /* For medium screens (tablets) */
+  .formContainer {
+    padding: 1.5rem; /* Increased padding for medium screens */
+  }
+  
+  .heading {
+    font-size: 1.375rem; /* text-xl */
+  }
+
+  .select,
+  .input {
+    font-size: 0.875rem; /* text-sm */
+    padding: 0.5rem; /* Maintain consistent padding */
+  }
+
+  .button {
+    padding: 0.5rem 0.75rem; /* Adjust button padding for medium screens */
+  }
+}
+
+@media (max-width: 640px) { /* For small screens */
+  .formContainer {
+    padding: 1rem; /* Adjust padding for smaller screens */
+  }
+
+  .heading {
+    font-size: 1.25rem; /* text-xl */
+  }
+
+  .select,
+  .input {
+    font-size: 0.75rem; /* text-xs */
+    padding: 0.5rem; /* Maintain consistent padding */
+  }
+
+  .button {
+    padding: 0.5rem; /* Adjust button padding for smaller screens */
+  }
+}
+
+@media (max-width: 480px) { /* For extra small screens */
+  .formContainer {
+    padding: 0.75rem; /* Further reduce padding for extra small screens */
+  }
+
+  .heading {
+    font-size: 1.125rem; /* text-lg */
+  }
+
+  .select,
+  .input {
+    font-size: 0.75rem; /* text-xs */
+    padding: 0.5rem; /* Adjust padding for better touch targets */
+  }
+
+  .button {
+    padding: 0.5rem; /* Adjust button padding for smaller screens */
+  }
+}
