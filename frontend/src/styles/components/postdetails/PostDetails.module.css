@@ -22,6 +22,8 @@
 
 .headinginfo > span {
     font-size: 2rem;
+    color: white;
+    font-weight: 500;
 }
 
 .thumbnail {
@@ -37,21 +39,14 @@
     object-fit: fill;
 }
 
-.heading > span {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    margin-left: 1rem;
-    margin-bottom: 1rem;
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: white;
-}
-
 .mainContent {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background: rgb(222,221,190);
+background: linear-gradient(117deg, rgba(222,221,190,0.9282211675876524) 0%, rgba(159,159,156,0.6934650700266769) 84%);
+border-radius: 15px;
+padding: 0.5rem;
 }
 
 .title {
@@ -65,10 +60,18 @@
     color: #666;
 }
 
-.content {
-    font-size: 2rem;
-    font-weight: 500;
-    line-height: 1.5;
+.description {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+.contentList {
+    margin-top: 10px;
+    font-size: 1.6rem;
+    line-height: 1.4;
+    list-style-type: disc;
+    padding-left: 20px;
     color: #333;
 }
 
@@ -83,19 +86,21 @@
     flex-direction: column;
     gap: 15px;
 }
-.commentHeading{
+
+.commentHeading {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+
 .commentHeading > img {
     width: 50px;
     cursor: pointer;
 }
-.commentHeading > h3{
+
+.commentHeading > h3 {
     font-size: 2rem;
 }
-
 
 .commentList {
     display: flex;
@@ -137,7 +142,6 @@
     align-items: center;
     width: 100%;
     outline: none;
-
 }
 
 .commentInput {
@@ -154,9 +158,103 @@
     cursor: pointer;
 }
 
+.button {
+    background-color: #007BFF; /* Blue background */
+    border: none; /* Remove default border */
+    color: white; /* White text */
+    padding: 10px 20px; /* Add some padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Inline block display */
+    font-size: 16px; /* Font size */
+    margin: 10px 2px; /* Margins */
+    max-width: 400px;
+    cursor: pointer; /* Pointer cursor on hover */
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+.button:active {
+    background-color: #004494; /* Even darker blue when clicked */
+    transform: scale(0.95); /* Slightly shrink button when clicked */
+}
+
+.summarySection {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+
+.summarySection h4 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.summarySection p {
+    font-size: 1.6rem;
+    color: #555;
+}
+
 /* Media Queries for Responsiveness */
 
+@media (max-width: 1024px) {
+    .thumbnail {
+        height: 180px;
+    }
+
+    .headinginfo > span,
+    .heading > span {
+        font-size: 1.8rem;
+    }
+
+    .title {
+        font-size: 2.2rem;
+    }
+
+    .category {
+        font-size: 1.4rem;
+    }
+
+    .description {
+        font-size: 1.6rem;
+    }
+
+    .contentList {
+        font-size: 1.5rem;
+    }
+
+    .commentHeading > h3 {
+        font-size: 1.8rem;
+    }
+
+    .commentText > p,
+    .commentText > span,
+    .commentAuthor {
+        font-size: 1.8rem;
+    }
+
+    .commentInput {
+        font-size: 1.8rem;
+    }
+
+    .sendIcon {
+        width: 35px;
+    }
+}
+
 @media (max-width: 768px) {
+    .container {
+        padding: 8px;
+    }
+
     .thumbnail {
         height: 150px;
     }
@@ -174,11 +272,15 @@
         font-size: 1.2rem;
     }
 
-    .content {
-        font-size: 1.5rem;
+    .description {
+        font-size: 1.4rem;
     }
 
-    .commentHeading > h3{
+    .contentList {
+        font-size: 1.4rem;
+    }
+
+    .commentHeading > h3 {
         font-size: 1.5rem;
     }
 
@@ -198,8 +300,12 @@
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+
     .thumbnail {
-        height: 100px;
+        height: 120px;
     }
 
     .headinginfo > span,
@@ -208,17 +314,22 @@
     }
 
     .title {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
     }
 
     .category {
         font-size: 1rem;
     }
 
-    .content {
+    .description {
         font-size: 1.2rem;
     }
-    .commentHeading > h3{
+
+    .contentList {
+        font-size: 1.2rem;
+    }
+
+    .commentHeading > h3 {
         font-size: 1.2rem;
     }
 

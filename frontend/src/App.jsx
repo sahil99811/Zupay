@@ -34,6 +34,7 @@ function App() {
           <Route path='/posts/:id' element={<PostDetailsPage />} />
           <Route path='/createpost' element={<AddPostPage />} />
           <Route path='/search' element={<SearchResultPage />} />
+          <Route path='/search/posts/:id' element={<PostDetailsPage/>}/>
           <Route path='/posts' element={<UserPostPage/>} />
         </Route>
       </Routes>

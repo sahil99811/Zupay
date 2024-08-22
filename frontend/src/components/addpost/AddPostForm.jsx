@@ -1,32 +1,21 @@
 import usePostForm from '../../hooks/usePostForm';
 import PropTypes from 'prop-types';
 import style from '../../styles/components/createpost/AddPostForm.module.css';
-import { useState } from 'react';
 
 export default function AddPostForm({ closeModal }) {
-  const { formState, handleChange, handleSubmit } = usePostForm(closeModal);
-  const [points, setPoints] = useState([]);
-  const [currentPoint, setCurrentPoint] = useState('');
-
-  const handleAddPoint = () => {
-    if (currentPoint.trim()) {
-      setPoints([...points, currentPoint]);
-      setCurrentPoint('');
-    }
-  };
-
-  const handleRemovePoint = (index) => {
-    setPoints(points.filter((_, i) => i !== index));
-  };
-
-  const handleFinalSubmit = (event) => {
-    event.preventDefault();
-    // Add points to formState before submitting
-    handleSubmit({ ...formState, points });
-  };
+  const {
+    formState,
+    points,
+    currentPoint,
+    handleChange,
+    handleAddPoint,
+    handleRemovePoint,
+    handleSubmit,
+    setCurrentPoint,
+  } = usePostForm(closeModal);
 
   return (
-    <form className={style.formContainer} onSubmit={handleFinalSubmit}>
+    <form className={style.formContainer} onSubmit={handleSubmit}>
       <h2 className={style.heading}>Post Form</h2>
       <div className={style.formGroup}>
         <label className={style.label}>Title</label>

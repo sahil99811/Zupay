@@ -1,4 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 import style from "../../styles/components/homepage/TrendingPost.module.css";
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -8,6 +9,11 @@ import impression from '../../assets/impression.png';
 import PropTypes from 'prop-types';
 
 const TrendingPost = ({ posts }) => {
+  const navigate = useNavigate();
+  
+    const onClickHandler = (id) => {
+        navigate((`posts/${id}`));
+    };
   return (
     <div className={style.container}>
       <h3 className={style.heading}>Trending Posts</h3>
@@ -22,14 +28,14 @@ const TrendingPost = ({ posts }) => {
         className={style.swiper}
       >
         {posts?.map((post, index) => (
-          <SwiperSlide className={style.swiperSlide} key={index}>
-            <img src={post.src} alt="" className={style.thumbnail} />
+          <SwiperSlide className={style.swiperSlide} key={index} onClick={()=>{onClickHandler(post._id)}}>
+            <img src={post.thumbnail} alt="" className={style.thumbnail} />
             <div className={style.details}>
-              <h4>Best Coin To Invest In Best Coin To Invest In Best Coin To Invest In</h4>
-              <span>Derick Jack</span>
+              <h4>{post.title}</h4>
+              <span>{post?.createdBy.name}</span>
               <div className={style.impression}>
                 <img src={impression}  alt="Impression icon" />
-                <span>55</span>
+                <span>{post.impression}</span>
               </div>
             </div>
           </SwiperSlide>

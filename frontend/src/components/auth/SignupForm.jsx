@@ -3,8 +3,12 @@ import style from '../../styles/components/auth/SignupForm.module.css';
 import formValidation from '../../utility/formValidation'; 
 import toast from 'react-hot-toast';
 import { signup } from '../../services/Auth';
+import { useDispatch } from 'react-redux';
+import { setLoading } from '../../slices/authSlice';
+
 // Component for signup form
 export default function SignupForm() {
+    const dispatch = useDispatch();
     const [signupData, setSignupData] = useState({ 
         name: "",
         email: "",
@@ -47,7 +51,8 @@ export default function SignupForm() {
 
         // If no validation errors, call signup API
         if (!validationErrors.name && !validationErrors.email && !validationErrors.password && !validationErrors.confirmpassword) {
-           const result=await signup(signupData);
+          dispatch(setLoading(true))
+            const result=await signup(signupData);
            if(result){
             setSignupData({ 
                 name: "",
@@ -56,6 +61,7 @@ export default function SignupForm() {
                 confirmpassword: ""
             })
            }
+           dispatch(setLoading(false))
         }
     };
 

@@ -4,9 +4,10 @@ import validator from "validator";
 import toast from 'react-hot-toast';
 import {login} from '../../services/Auth'
 import { useDispatch } from 'react-redux';
-import {setToken} from '../../slices/authSlice'
+import {setLoading, setToken} from '../../slices/authSlice'
 // Component for login form
 export default function LoginForm() {
+
   const dispatch=useDispatch();
   const [formData, setFormData] = useState({
     email: "",
@@ -33,10 +34,12 @@ export default function LoginForm() {
       toast.error("Please enter a valid email");
       return;
     }
+    dispatch(setLoading(true))
     const result=await login(formData);
     if(result){
       dispatch(setToken(result))
     }
+    dispatch(setLoading(false))
   };
 
   return (

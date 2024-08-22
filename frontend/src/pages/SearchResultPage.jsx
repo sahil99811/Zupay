@@ -1,17 +1,57 @@
-
-import PostCard from "../components/common/PostCard"
-import style from '../styles/pages/CommonCss.module.css'
+import PostCard from "../components/common/PostCard";
+import style from '../styles/pages/CommonCss.module.css';
+import { useEffect, useState } from "react";
+import { Oval } from 'react-loader-spinner';
+import { searchPosts } from "../services/Post";
+import { useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 export default function SearchResultPage() {
-  const data = [{ src: "https://www.pmindia.gov.in/wp-content/uploads/2022/12/Modi-Ji-Photo-02-e1647325936821.jpg" }, { src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAtp0WKIcs_WiDSqfWLfL-UlIj-OWOsHdOcQ&s" }, { src: "https://images.bhaskarassets.com/web2images/521/2023/10/21/akhilesh-yadav-5_1697873749.jpg" }];
-  return (
-    <div className={style.container} >
-         <div className={style.maincontent}>
-         {
-            data.map((val,index)=>{
-              return <PostCard key={index} />
-            })
-          }  
-         </div>
-    </div>
-  )
+  const location=useLocation();
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true); 
+    const {token}=useSelector(state=>state.auth);
+    const fetchData = async () => {
+        try {
+            setLoading(true); 
+           const result= await searchPosts(location.search.split("=")[1],token);
+           if(result){
+            setData(result);
+           }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false); 
+        }
+    };
+
+    useEffect(() => {
+        
+        fetchData();
+    }, [location]);
+
+    return (
+        <div className={style.container}>
+            {loading ? (
+                <Oval
+                    visible={true}
+                    height="80"
+                    width="80"
+                    color="#4fa94d"
+                    ariaLabel="oval-loading"
+                    wrapperStyle={{ zIndex: 500, position: 'absolute', top: '0', left: '50%', marginTop: "8rem" }}
+                    wrapperClass=""
+                />
+            ) : (
+                <div className={style.maincontent}>
+                    {data.length > 0 ? (
+                        data.map((val, index) => (
+                            <PostCard key={index} post={val} page="search" />
+                        ))
+                    ) : (
+                        <p>No results found.</p>
+                    )}
+                </div>
+            )}
+        </div>
+    );
 }
