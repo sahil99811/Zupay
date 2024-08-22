@@ -5,6 +5,9 @@ const dotenv = require('dotenv'); // dotenv is used to load environment variable
 const cors=require('cors')
 const { dbConnect } = require('./config/dbConnect'); // Import the database connection function
 const authRoutes=require('./routes/Auth');
+const commentRoutes=require('./routes/Comment')
+const postRoutes=require('./routes/Post');
+const summarizeRoutes=require('./routes/Summarize')
 dotenv.config(); // Load environment variables from the .env file into process.env
 app.use(express.json()); // Middleware to parse JSON bodies
 
@@ -12,7 +15,9 @@ app.use(express.json()); // Middleware to parse JSON bodies
 app.use(cors());
 // Use authentication routes, prefixed with /api/v1/auth
 app.use('/api/v1/auth', authRoutes);
-
+app.use('/api/v1',postRoutes);
+app.use('/api/v1',commentRoutes);
+// app.use('/api/v1',summarizeRoutes);
 // Connect to the database
 dbConnect()
     .then(() => {

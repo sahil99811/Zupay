@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { auth } = require('../middlewares/Auth');
-const { getPosts, getUserPosts, getPostDetails, likePost, deletePost, createPost } = require('../controllers/Post');
+const { getPosts, getUserPosts, getPostDetails, likePost, deletePost, createPost } = require('../contollers/Post');
 const { searchPosts } = require('../contollers/Post');
 
 router.get("/posts", auth, getPosts);                 // Get all posts
