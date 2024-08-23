@@ -1,9 +1,6 @@
-// Import Mongoose module to interact with MongoDB
-const mongoose = require('mongoose');
-
+const mongoose=require('mongoose')
 // Define the Blog schema using Mongoose's Schema class
 const postSchema = new mongoose.Schema({
-   
     // The 'title' field stores the title of the blog post and is required
     title: {
         type: String, // Data type for the field
@@ -14,20 +11,23 @@ const postSchema = new mongoose.Schema({
         type: String, // Data type for the field
         required: true // This field is mandatory
     },
-    // The 'content' field stores the main content of the blog post and is required
-    content: {
+    // The 'description' field stores paragraphs of text and is required
+    description: {
         type: String, // Data type for the field
         required: true // This field is mandatory
     },
-    // The 'like' field tracks the number of likes on the blog post
-    like: {
+    // The 'content' field stores headings or structured data
+    content: [String], // Array of strings for headings
+
+    // The 'impression' field tracks the number of impressions on the blog post
+    impression: {
         type: Number, // Data type for the field
-        default: 0 // Default value is 0, meaning no likes initially
+        default: 0 // Default value is 0, meaning no impressions initially
     },
     // The 'comments' field is an array that stores references to Comment documents
     comments: [
         {
-            type: mongoose.Types.ObjectId, // Data type for the field (ObjectId)
+            type: mongoose.Schema.Types.ObjectId, // Data type for the field (ObjectId)
             ref: "Comment" // Reference to the Comment model (collection)
         }
     ],
@@ -38,7 +38,7 @@ const postSchema = new mongoose.Schema({
     },
     // The 'createdBy' field stores a reference to the User who created the blog post
     createdBy: {
-        type: mongoose.Types.ObjectId, // Data type for the field (ObjectId)
+        type: mongoose.Schema.Types.ObjectId, // Data type for the field (ObjectId)
         ref: "User" // Reference to the User model (collection)
     }
 }, 

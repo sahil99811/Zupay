@@ -5,7 +5,6 @@ exports.auth = async (req, res, next) => {
 	try {
         // Extract token from the Authorization header
         const token = req.header("Authorization").replace("Bearer ", "");
-
 		// If JWT is missing, return 401 Unauthorized response
 		if (!token) {
 			return res.status(401).json({ success: false, message: `Token Missing` });

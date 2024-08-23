@@ -1,25 +1,39 @@
-const Comment=require('../models/Comment');
-const {errorResponse}=require('../utils/error-response')
+const Comment = require('../models/Comment');
+const Post=require('../models/Post');
+const { post } = require('../routes/Post');
+const { errorResponse } = require('../utils/error-response');
 
-const createComment=async (re,res)=>{
-    try{
-        const {id}=req.user;
-        const {postid}=req.params;
-        const {text}=req.body;
-        await Comment.create({
-            text:text,
-            post:postid,
-            author:id
-        })
-        res.status(200).json({
-            success:true,
-            message:"Comment Created Successfully..."
+const createComment = async (req, res) => {
+    try {
+        const { id } = req.user; // The user's ID
+        const { postid } = req.params; // The post ID from the request parameters
+        const { text } = req.body; // The comment text from the request body
+     
+        // Create the comment
+        let comment = await Comment.create({
+            text: text,
+            post: postid,
+            author: id
         });
-    }catch(error){
-        console.error("Error liking post:", error);
+
+        await Post.findByIdAndUpdate(postid,{
+            $push: { comments:comment._id }
+        })
+        // Populate the author's name in the created comment
+        comment = await comment.populate({
+            path: "author",
+            select: "name"
+        });
+
+        res.status(200).json({
+            success: true,
+            comment,
+            message: "Comment Created Successfully..."
+        });
+    } catch (error) {
+        console.error("Error creating comment:", error);
         return errorResponse(res, 500, "Server error");
     }
-}
+};
 
-
-module.exports={createComment}
+module.exports = { createComment };

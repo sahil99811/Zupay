@@ -1,16 +1,19 @@
+const Post=require('../models/Post')
+const User=require('../models/User');
 // Fetch trending and popular posts
  const getPosts = async (req, res) => {
     try {
-        const trendingPosts = await Post.find({})
-            .select("title like impression thumbnail createdBy")
+        const {id}=req.user;
+        const trendingPosts = await Post.find({createdBy:{$ne:id}})
+            .select("title  impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" })
             .sort({ impression: -1 })
             .limit(10);
 
-        const popularPosts = await Post.find({})
-            .select("title content like impression thumbnail createdBy")
+        const popularPosts = await Post.find({createdBy:{$ne:id}})
+            .select("title description like impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" })
-            .sort({ like: -1 })
+            .sort({ impression: -1 })
             .limit(10)
 
         res.status(200).json({
@@ -29,7 +32,7 @@ const getUserPosts = async (req, res) => {
     try {
         const { id } = req.user;
         const userPosts = await Post.find({ createdBy: id })
-            .select("title content like impression thumbnail createdBy")
+            .select("title content description  impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" });
         
         res.status(200).json({
@@ -45,13 +48,13 @@ const getUserPosts = async (req, res) => {
 // Fetch details of a single post by its ID
 const getPostDetails = async (req, res) => {
     try {
-        const { id } = req.params;
-        
+        const { postid } = req.params;
+        const {id}=req.user;
         // Increment impression count
-        await Post.findByIdAndUpdate(id, { $inc: { impression: 1 } }, { new: true });
+        await Post.findByIdAndUpdate({_id:postid,createdBy:{$ne:id}}, { $inc: { impression: 1 } }, { new: true });
 
-        const post = await Post.findById(id)
-            .select("title content category like impression thumbnail createdBy comments createdAt")
+        const post = await Post.findById(postid)
+            .select("title description content category like impression thumbnail createdBy comments createdAt")
             .populate({ path: "createdBy", select: "name" })
             .populate({
                 path: "comments",
@@ -62,10 +65,10 @@ const getPostDetails = async (req, res) => {
         if (!post) {
             return errorResponse(res, 404, "Post not found");
         }
-
         res.status(200).json({
             success: true,
             data: post,
+            admin:id===post.createdBy._id.toString(),
             message: "Post details fetched successfully"
         });
     } catch (error) {
@@ -76,7 +79,7 @@ const getPostDetails = async (req, res) => {
 const searchPosts = async (req, res) => {
     try {
         const { search } = req.query;
-
+        const {id}=req.user;
         // Check if the search query is provided
         if (!search) {
             return res.status(400).json({
@@ -86,10 +89,9 @@ const searchPosts = async (req, res) => {
         }
 
         // Perform a case-insensitive search using RegExp
-        const posts = await Post.find({ title: new RegExp(search, "i") })
-            .select("title content like impression thumbnail createdBy")
+        const posts = await Post.find({ title: new RegExp(search, "i") ,createdBy:{$ne:id}})
+            .select("title content description impressions thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" });
-
         // Respond with the fetched posts
         res.status(200).json({
             success: true,
@@ -99,18 +101,23 @@ const searchPosts = async (req, res) => {
 
     } catch (error) {
         console.error("Error fetching posts:", error);
-        return errorResponse(res, 500, "Server error");
+        return res.status(500).json({
+            success: false,
+            message: "Server error. Please try again later."
+        });
     }
 };
+
 
 // Create a new post
 const createPost = async (req, res) => {
     try {
         const { id } = req.user;
-        const { title, category, content, thumbnail } = req.body;
+        console.log(req.body);
+        const { title, category,content,thumbnail,points } = req.body;
 
         const post = await Post.create({
-            title, thumbnail, content, category, createdBy: id
+            title, thumbnail, description:content,content:points, category, createdBy: id
         });
 
         await User.findByIdAndUpdate(id, {
@@ -152,29 +159,7 @@ const deletePost = async (req, res) => {
     }
 };
 
-// Like a post by its ID
-const likePost = async (req, res) => {
-    try {
-        const { postid } = req.params;
-
-        const post = await Post.findByIdAndUpdate(postid, {
-            $inc: { like: 1 }
-        }, { new: true });
-
-        if (!post) {
-            return errorResponse(res, 404, "Post not found");
-        }
-
-        res.status(200).json({
-            success:true,
-            message:"Post liked succesfully"
-        });
-    } catch (error) {
-        console.error("Error liking post:", error);
-        return errorResponse(res, 500, "Server error");
-    }
-};
 
 
 
-module.exports={getPosts,getUserPosts,getPostDetails,likePost,deletePost,createPost,searchPosts}
+module.exports={getPosts,getUserPosts,getPostDetails,deletePost,createPost,searchPosts}

@@ -17,7 +17,7 @@ app.use(cors());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1',postRoutes);
 app.use('/api/v1',commentRoutes);
-// app.use('/api/v1',summarizeRoutes);
+app.use('/api/v1',summarizeRoutes);
 // Connect to the database
 dbConnect()
     .then(() => {

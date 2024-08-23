@@ -1,5 +1,5 @@
 import style from '../styles/pages/HomePage.module.css';
-import TrendingPost from "../components/homepage/trendingPost";
+import TrendingPost from "../components/homepage/TrendingPost";
 import PostCard from "../components/common/PostCard";
 import { useEffect, useState } from "react";
 import { getPosts } from "../services/Post";
