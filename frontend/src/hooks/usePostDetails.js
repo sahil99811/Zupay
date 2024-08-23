@@ -1,9 +1,8 @@
-// hooks/usePostDetails.js
+
 import { useState, useEffect } from 'react';
 import { getPostDetails } from '../services/Post';
 import { createComment } from '../services/Comment';
 import { getSummary } from '../services/Summarize';
-
 export default function usePostDetails(postId, token) {
     const [postDetails, setPostDetails] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -19,7 +18,7 @@ export default function usePostDetails(postId, token) {
         try {
             const result = await getPostDetails(postId, token);
             if (result && result.data) {
-                setPostDetails(result.data);
+                setPostDetails(result.data.data);
                 setAdmin(result.data.admin || false);
             }
         } catch (err) {

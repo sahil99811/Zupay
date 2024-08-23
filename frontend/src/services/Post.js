@@ -50,7 +50,7 @@ export const getPostDetails=async (id,token)=>{
                 'Authorization': `Bearer ${token}`,
             }
         })
-        return result?.data;
+        return result;
     }catch(error){
         console.log(error);
         return false;

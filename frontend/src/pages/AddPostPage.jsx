@@ -37,7 +37,7 @@ export default function AddPostPage() {
     useEffect(()=>{
       openModal()
     },[])
-    console.log(modalIsOpen)
+   
   return (
     <div >
        <Modal

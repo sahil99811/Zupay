@@ -60,12 +60,14 @@ export default function PostDetails() {
                                 </li>
                             ))}
                         </ul>
-                        <button
+                        {
+                            !admin&&<button
                             className={style.button}
                             onClick={getpostSummary}
                         >
                             Get Summary of blog in short from AI
                         </button>
+                        }
                         {summary && (
                             <div className={style.summarySection}>
                                 <h4>Summary</h4>

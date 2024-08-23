@@ -1,5 +1,7 @@
 const Post=require('../models/Post')
 const User=require('../models/User');
+const Comment=require('../models/Comment')
+const {errorResponse} =require('../utils/error-response')
 // Fetch trending and popular posts
  const getPosts = async (req, res) => {
     try {
@@ -119,7 +121,6 @@ const searchPosts = async (req, res) => {
 const createPost = async (req, res) => {
     try {
         const { id } = req.user;
-        console.log(req.body);
         const { title, category,content,thumbnail,points } = req.body;
 
         const post = await Post.create({
@@ -145,9 +146,8 @@ const deletePost = async (req, res) => {
     try {
         const { id } = req.user;
         const { postid } = req.params;
-
+  
         const deletedPost = await Post.findByIdAndDelete(postid);
-
         if (!deletedPost) {
             return errorResponse(res, 404, "Post not found");
         }
