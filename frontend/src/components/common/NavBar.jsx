@@ -29,6 +29,7 @@ const NavBar = () => {
   const onSearch = useCallback(() => {
     if (search.trim()) {
       navigate(`/search?query=${encodeURIComponent(search)}`);
+      setSearch("")
     }
   }, [search, navigate]);
 
