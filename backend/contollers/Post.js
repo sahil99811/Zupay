@@ -64,10 +64,10 @@ const getPostDetails = async (req, res) => {
         if (!post) {
             return errorResponse(res, 404, "Post not found");
         }
-
-        // Increment impression count only if the user is not the creator of the post
-        if (post.createdBy._id.toString() !== id) {
-            await Post.findByIdAndUpdate(postid, { $inc: { impression: 1 } }, { new: true });
+        // Increment impression count if user is not the post creator (admin)
+        if (id !== post.createdBy._id.toString()) {
+            post.impression += 1;
+            await post.save();
         }
 
         res.status(200).json({

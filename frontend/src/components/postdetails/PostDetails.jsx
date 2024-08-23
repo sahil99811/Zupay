@@ -43,7 +43,7 @@ export default function PostDetails() {
                     <header className={style.heading}>
                         <img src={postDetails.thumbnail} className={style.thumbnail} alt="Thumbnail" />
                         <div className={style.headinginfo}>
-                            <span className={style.impression}>{`Impression: ${postDetails.impression + 1}`}</span>
+                            <span className={style.impression}>{`Impression: ${postDetails.impression}`}</span>
                             <span className={style.createAt}>Created At: {new Date(postDetails.createdAt).toLocaleDateString()}</span>
                         </div>
                     </header>
