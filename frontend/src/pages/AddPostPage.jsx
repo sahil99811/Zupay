@@ -32,7 +32,7 @@ export default function AddPostPage() {
 
     function closeModal() {
       setIsOpen(false); // Function to close the modal
-      navigate('/');
+      navigate('/posts');
     }
     useEffect(()=>{
       openModal()
