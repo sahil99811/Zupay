@@ -61,17 +61,11 @@ export default function PostDetails() {
 
     const getpostSummary = async () => {
         if (!postDetails) return;
-        console.log("Fetching summary...");
         try {
-            const summaryData = {
-                title: postDetails.title,
-                description: postDetails.description,
-                content: postDetails.content.join(' ')
-            };
+            const summaryData = `${postDetails.title} ${postDetails.description} ${postDetails.content.join(' ')}`;
             const result = await getSummary(summaryData, token);
             if (result && result.data) {
-                setSummary(result.data.summary); // Assuming result.data contains the summary
-                console.log("Summary:", result.data.summary);
+                setSummary(result.data.data); 
             }
         } catch (err) {
             console.error("Error fetching summary:", err);

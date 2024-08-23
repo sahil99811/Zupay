@@ -2,7 +2,7 @@ const { getSummary } = require('../utils/summarizeUtils');
 
 exports.getBlogSummary = async (req, res) => {
     const { content } = req.query;
-    console.log("funciton is called",content);
+    console.log(content);
     if (!content) {
         return res.status(400).json({ error: 'Content is required' });
     }
