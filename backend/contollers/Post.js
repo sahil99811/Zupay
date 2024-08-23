@@ -49,10 +49,9 @@ const getUserPosts = async (req, res) => {
 const getPostDetails = async (req, res) => {
     try {
         const { postid } = req.params;
-        const {id}=req.user;
-        // Increment impression count
-        await Post.findByIdAndUpdate({_id:postid,createdBy:{$ne:id}}, { $inc: { impression: 1 } }, { new: true });
+        const { id } = req.user;
 
+        // Fetch the post by ID to check its creator
         const post = await Post.findById(postid)
             .select("title description content category like impression thumbnail createdBy comments createdAt")
             .populate({ path: "createdBy", select: "name" })
@@ -65,10 +64,16 @@ const getPostDetails = async (req, res) => {
         if (!post) {
             return errorResponse(res, 404, "Post not found");
         }
+
+        // Increment impression count only if the user is not the creator of the post
+        if (post.createdBy._id.toString() !== id) {
+            await Post.findByIdAndUpdate(postid, { $inc: { impression: 1 } }, { new: true });
+        }
+
         res.status(200).json({
             success: true,
             data: post,
-            admin:id===post.createdBy._id.toString(),
+            admin: id === post.createdBy._id.toString(),
             message: "Post details fetched successfully"
         });
     } catch (error) {
@@ -76,6 +81,7 @@ const getPostDetails = async (req, res) => {
         return errorResponse(res, 500, "Server error");
     }
 };
+
 const searchPosts = async (req, res) => {
     try {
         const { search } = req.query;
