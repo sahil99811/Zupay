@@ -28,7 +28,7 @@ export default function HomePage() {
         if (token) {
             fetchPosts();
         }
-    }, [token]);
+    }, []);
 
     return (
         <div>
