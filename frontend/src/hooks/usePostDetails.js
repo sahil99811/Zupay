@@ -59,6 +59,7 @@ export default function usePostDetails(postId, token) {
             const summaryData = `${postDetails.title} ${postDetails.description} ${postDetails.content.join(' ')}`;
             const result = await getSummary(summaryData, token,dispatch);
             if (result && result.data) {
+                
                 setSummary(result.data.data);
             }
         } catch (err) {

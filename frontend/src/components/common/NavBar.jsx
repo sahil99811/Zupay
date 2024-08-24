@@ -6,6 +6,7 @@ import logo from '../../assets/logo.png';
 import searchbar from '../../assets/searchbar.png';
 import { useDispatch } from 'react-redux';
 import { setToken } from '../../slices/authSlice';
+import toast from 'react-hot-toast';
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ const NavBar = () => {
     }
   }, [onSearch]);
   const logoutHandler=()=>{
+    toast.success("Logout Succesfully..");
     localStorage.clear();
     dispatch(setToken(null));
      
