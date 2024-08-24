@@ -52,7 +52,10 @@ const getPostDetails = async (req, res) => {
     try {
         const { postid } = req.params;
         const { id } = req.user;
-
+        // Check if quizId is a valid MongoDB ObjectId
+        if (!mongoose.Types.ObjectId.isValid(id)) {
+            return res.status(404).json({ success: false, message: 'Invalid post ID' });
+        }
         // Fetch the post by ID to check its creator
         const post = await Post.findById(postid)
             .select("title description content category like impression thumbnail createdBy comments createdAt")
