@@ -72,8 +72,8 @@
     font-size: 1.5rem; /* Decreased font size */
     font-weight: 500;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -146,6 +146,8 @@
 
     .info {
         font-size: 1.4rem; /* Decreased font size */
+        -webkit-line-clamp: 3;
+         line-clamp: 3;
     }
 
     .createdby {
@@ -175,6 +177,8 @@
 
     .info {
         font-size: 1.3rem; /* Decreased font size */
+        -webkit-line-clamp: 2;
+         line-clamp: 2;
     }
 
     .createdby {
