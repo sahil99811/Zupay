@@ -254,8 +254,8 @@ backend/
 
 1. **Clone the Repository**
     ```bash
-    git clone <repository-url>
-    cd <repository-folder>
+    git clone https://github.com/sahil99811/Zupay.git
+    cd Zupay
     ```
 
 2. **Backend Setup**
