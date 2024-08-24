@@ -3,8 +3,9 @@
 Zupay Blog Platform is a comprehensive blogging application that allows users to create, view, and interact with blog posts. It leverages AI to generate concise summaries of blog content, making it easier for readers to quickly grasp the key points. The platform includes user authentication, state management, and various other features to enhance the user experience.
 
 ## Table of Contents
-
 - [Project Overview](#project-overview)
+- [Accessing the Application](#Accessing-the-Application)
+- [Usage Overview](#usage-overview)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Folder Structure](#folder-structure)
@@ -18,7 +19,90 @@ Zupay Blog Platform is a comprehensive blogging application that allows users to
 ## Project Overview
 
 The Zupay Blog Platform is designed to provide a seamless experience for both readers and authors. It utilizes AI to automatically generate summaries of blog posts, helping users quickly understand the content. The application also includes features such as a comment system, user authentication, search functionality, and trending content display.
+## Accessing the Application
 
+Visit the application at [Zupay Blog Platform](https://zupay-seven.vercel.app/).
+
+## Usage Overview
+
+### Authentication
+
+#### First-Time Visit
+
+- **When you first visit the website**, you will be directed to the Authentication page.
+- You have two options:
+  - **Login**: If you already have an account, enter your credentials (username and password) to log in. After logging in, you will be redirected to the Homepage.
+  - **Sign Up**: If you don’t have an account, provide the necessary details to create a new account. Upon successful registration, you can then enter your credentials to log in to the website.
+
+- **Token-Based Authentication**:
+  - After logging in, a token is set with a 7-day expiration time.
+  - Upon subsequent visits within the 7-day period, you will be automatically redirected to the Homepage without needing to re-enter your credentials. If the token expires, you will be prompted to log in again.
+
+### Homepage
+
+#### Trending Posts
+
+- The Homepage displays trending blog posts based on impressions.
+- The page features a slider showcasing a selection of posts.
+- Below the slider, the top 20 trending posts are highlighted based on impressions.
+
+### Navbar
+
+The Navbar is a common element across all pages except the Authentication page and includes the following options:
+
+- **Home**: Takes you back to the Homepage.
+- **Create Post**: Opens a popup to create a new blog post.
+- **Your Posts**: Shows a list of your own blog posts.
+- **Logout**: Logs you out of the application.
+- **Search Bar**: Allows you to search for blog posts by entering text and pressing **Enter**. The search results will show posts matching the entered text.
+
+### Viewing and Interacting with Posts
+
+#### Viewing Posts
+
+- Blog posts are displayed as cards.
+- Clicking on a post card redirects you to the Post Details page.
+
+#### Post Details Page
+
+- Displays full details of the selected blog post.
+- You can view and add comments.
+- Click the **Get Summary** button to obtain an AI-generated summary of the blog post.
+
+### Creating a Post
+
+#### Create Post Popup
+
+- Click on **Create Post** in the Navbar.
+- A popup form will appear for you to enter details for your new blog post.
+- Fill in the form and submit to create the post.
+
+### Managing Your Posts
+
+#### Your Posts Page
+
+- Click on **Your Posts** in the Navbar.
+- Your posts will be displayed as cards.
+
+#### Post Details & Deletion
+
+- Clicking on a post card shows the Post Details page.
+- You can delete your post by clicking the delete icon on the card.
+- A confirmation popup will appear to confirm the deletion. Only you can delete your posts.
+
+### Searching for Posts
+
+#### Search Bar
+
+- Enter text in the search bar located in the Navbar.
+- Press the **Enter** key to search for blog posts.
+- Search results will show posts matching the entered text.
+- Click on a search result to view the Post Details page.
+
+### Logout
+
+- To log out, click on the **Logout** option in the Navbar. This will end your current session, clear the token, and redirect you to the Authentication page.
+  
 ## Features
 
 - **AI-Powered Blog Summaries**: Automatically generate concise summaries of blog posts using AI technology.
