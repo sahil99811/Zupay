@@ -15,8 +15,10 @@ export default function HomePage() {
     const fetchPosts = async () => {
         dispatch(setLoading(true));
         try {
-            const result = await getPosts(token);
-            setPosts(result?.data || {}); // Set empty object if result.data is undefined
+            const result = await getPosts(token,dispatch);
+            if(result){
+                setPosts(result?.data || {});
+            }
         } catch (error) {
             console.error('Error fetching posts:', error);
         } finally {

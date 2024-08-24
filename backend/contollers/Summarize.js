@@ -9,7 +9,7 @@ exports.getBlogSummary = async (req, res) => {
 
     try {
         const summary = await getSummary(content);
-        res.status(200).json({ success: true, data: summary, message: "Blog summarized successfully" });
+        res.status(201).json({ success: true, data: summary, message: "Blog summarized successfully" });
     } catch (error) {
         res.status(500).json({ error: 'An error occurred while summarizing the content' });
     }

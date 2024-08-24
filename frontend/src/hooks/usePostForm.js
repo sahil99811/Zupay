@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { createPost } from '../services/Post';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 const usePostForm = (closeModal) => {
+  const dispatch=useDispatch();
   const {token}=useSelector(state=>state.auth)
   const [formState, setFormState] = useState({
     title: '',
@@ -43,9 +44,10 @@ const usePostForm = (closeModal) => {
     // Add points to formState before submitting
     try {
       // Assuming `createPost` is an async function to post the data
-      await createPost({...formState,points},token);
-      toast.success('Post created successfully');
-      closeModal();
+     const result= await createPost({...formState,points},token,dispatch);
+      if(result){
+        closeModal();
+      }
     } catch (error) {
       toast.error('An error occurred while creating the post',error);
     }

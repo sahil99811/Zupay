@@ -1,84 +1,153 @@
 import axios from "axios";
 const backendURL = import.meta.env.VITE_BACKEND_BASE_URL;
-
-export const createPost=async (formdata,token)=>{
+import { setToken } from '../slices/authSlice';
+import { toast } from 'react-hot-toast';
+export const createPost=async (formdata,token,dispatch)=>{
     try{
-        console.log(formdata,token,backendURL);
+
         const result=await axios.post(`${backendURL}/posts`,formdata,{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401; 
             }
         })
-        console.log(result.data);
+        if (result.status === 201) {
+            toast.success(result?.data?.message);
+            return true;
+        }
+        toast.error(result?.data?.message); 
+        dispatch(setToken(null)); 
+        localStorage.removeItem("token"); 
+        return false;
     }catch(error){
         console.log(error);
-   
+        return false;
     }
 }
 
-export const getUserPosts=async (token)=>{
+export const getUserPosts=async (token,dispatch)=>{
     try{
         const result=await axios.get(`${backendURL}/user/posts`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401;
             }
         })
-        return result.data
+        if (result.status === 201) {
+            toast.success(result?.data?.message);
+            return result.data;
+        }
+        toast.error(result?.data?.message); 
+        dispatch(setToken(null)); 
+        localStorage.removeItem("token"); 
+        return false;
     }catch(error){
         console.log(error);
         return false;
     }
 }
 
-export const getPosts=async (token)=>{
+export const getPosts=async (token,dispatch)=>{
     try{
         const result=await axios.get(`${backendURL}/posts`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401;
             }
         })
-        return result.data
+
+        if (result.status === 201) {
+            toast.success(result?.data?.message);
+            return result.data;
+        }
+        toast.error(result?.data?.message); 
+        dispatch(setToken(null)); 
+        localStorage.removeItem("token"); 
+        return false;
     }catch(error){
         console.log(error);
         return false;
     }
 }
-export const getPostDetails=async (id,token)=>{
+export const getPostDetails=async (id,token,dispatch)=>{
     try{
         const result=await axios.get(`${backendURL}/posts/${id}`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401 || status=== 404;
             }
         })
-        return result;
+        if (result.status === 201) {
+            if (!result?.data?.data) {
+                toast.success("There is no quiz to show first create a quiz");
+            } else {
+                toast.success(result?.data?.message); 
+            }
+            return result; 
+        } else if (result?.status === 404) {
+            toast.error(result?.data?.message);
+            return false;
+        }
+        dispatch(setToken(null));
+        localStorage.removeItem("token");
+        toast.error(result?.data?.message); 
+        return false;
     }catch(error){
         console.log(error);
         return false;
     }
 }
 
-export const deletePost=async (id,token)=>{
+export const deletePost=async (id,token,dispatch)=>{
     try{
-        await axios.delete(`${backendURL}/posts/${id}`,{
+       const result= await axios.delete(`${backendURL}/posts/${id}`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401 || status=== 404;
             }
         })
-        return true;
+        if (result.status === 201) {
+            toast.success(result?.data?.message); 
+            return true; 
+        } else if (result?.status === 404) {
+            toast.error(result?.data?.message);
+            return false;
+        }
+        dispatch(setToken(null));
+        localStorage.removeItem("token");
+        toast.error(result?.data?.message); 
+        return false;
     }catch(error){
         console.log(error);
        return false;
     }
 }
 
-export const searchPosts=async (query,token)=>{
+export const searchPosts=async (query,token,dispatch)=>{
     try{
         const result=await axios.get(`${backendURL}/posts/search?search=${query}`,{
             headers:{
                 'Authorization': `Bearer ${token}`,
             }
         })
-       return  result.data.data
+        if (result.status === 201) {
+            toast.success(result?.data?.message); 
+            return result.data.data; 
+        } 
+        dispatch(setToken(null));
+        localStorage.removeItem("token");
+        toast.error(result?.data?.message); 
+        return false;
     }catch(error){
         console.log(error);
         return false;

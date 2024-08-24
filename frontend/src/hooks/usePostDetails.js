@@ -3,7 +3,9 @@ import { useState, useEffect } from 'react';
 import { getPostDetails } from '../services/Post';
 import { createComment } from '../services/Comment';
 import { getSummary } from '../services/Summarize';
+import { useDispatch } from 'react-redux';
 export default function usePostDetails(postId, token) {
+    const dispatch=useDispatch();
     const [postDetails, setPostDetails] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -13,10 +15,11 @@ export default function usePostDetails(postId, token) {
     const [admin, setAdmin] = useState(false);
 
     const fetchPostDetails = async () => {
+     
         setLoading(true);
         setError(null);
         try {
-            const result = await getPostDetails(postId, token);
+            const result = await getPostDetails(postId, token,dispatch);
             if (result && result.data) {
                 setPostDetails(result.data.data);
                 setAdmin(result.data.admin || false);
@@ -36,7 +39,7 @@ export default function usePostDetails(postId, token) {
     const sendComment = async () => {
         if (comment.trim() === "") return;
         try {
-            const result = await createComment(postDetails._id, comment, token);
+            const result = await createComment(postDetails._id, comment, token,dispatch);
             if (result && result.data) {
                 setPostDetails(prevDetails => ({
                     ...prevDetails,
@@ -54,7 +57,7 @@ export default function usePostDetails(postId, token) {
         if (!postDetails) return;
         try {
             const summaryData = `${postDetails.title} ${postDetails.description} ${postDetails.content.join(' ')}`;
-            const result = await getSummary(summaryData, token);
+            const result = await getSummary(summaryData, token,dispatch);
             if (result && result.data) {
                 setSummary(result.data.data);
             }

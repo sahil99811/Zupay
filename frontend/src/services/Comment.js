@@ -6,6 +6,9 @@ export const createComment=async (postid,comment,token)=>{
         const result=await axios.post(`${backendURL}/comment/${postid}`,{text:comment},{
             headers:{
                 'Authorization': `Bearer ${token}`,
+            },
+            validateStatus(status) {
+                return status === 201 || status === 403 || status === 401 
             }
         })
         return result;

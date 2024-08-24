@@ -3,17 +3,18 @@ import style from '../styles/pages/CommonCss.module.css';
 import { useEffect, useState } from "react";
 import { Oval } from 'react-loader-spinner';
 import { searchPosts } from "../services/Post";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 export default function SearchResultPage() {
   const location=useLocation();
+   const dispatch=useDispatch()
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true); 
     const {token}=useSelector(state=>state.auth);
     const fetchData = async () => {
         try {
             setLoading(true); 
-           const result= await searchPosts(location.search.split("=")[1],token);
+           const result= await searchPosts(location.search.split("=")[1],token,dispatch);
            if(result){
             setData(result);
            }

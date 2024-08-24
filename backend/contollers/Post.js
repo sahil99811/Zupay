@@ -2,6 +2,7 @@ const Post=require('../models/Post')
 const User=require('../models/User');
 const Comment=require('../models/Comment')
 const {errorResponse} =require('../utils/error-response')
+const mongoose=require('mongoose');
 // Fetch trending and popular posts
  const getPosts = async (req, res) => {
     try {
@@ -18,7 +19,7 @@ const {errorResponse} =require('../utils/error-response')
             .sort({ impression: -1 })
             .limit(10)
 
-        res.status(200).json({
+        res.status(201).json({
             success:true,
             data:{ trendingPosts, popularPosts },
              message:"Posts fetched successfully"
@@ -37,7 +38,7 @@ const getUserPosts = async (req, res) => {
             .select("title content description  impression thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" });
         
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data: userPosts,
             message: "Posts fetched successfully"
@@ -53,7 +54,7 @@ const getPostDetails = async (req, res) => {
         const { postid } = req.params;
         const { id } = req.user;
         // Check if quizId is a valid MongoDB ObjectId
-        if (!mongoose.Types.ObjectId.isValid(id)) {
+        if (!mongoose.Types.ObjectId.isValid(postid)) {
             return res.status(404).json({ success: false, message: 'Invalid post ID' });
         }
         // Fetch the post by ID to check its creator
@@ -75,7 +76,7 @@ const getPostDetails = async (req, res) => {
             await post.save();
         }
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data: post,
             admin: id === post.createdBy._id.toString(),
@@ -104,7 +105,7 @@ const searchPosts = async (req, res) => {
             .select("title content description impressions thumbnail createdBy")
             .populate({ path: "createdBy", select: "name" });
         // Respond with the fetched posts
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             data: posts,
             message: "Posts fetched successfully"
@@ -149,19 +150,16 @@ const deletePost = async (req, res) => {
     try {
         const { id } = req.user;
         const { postid } = req.params;
-  
-        const deletedPost = await Post.findByIdAndDelete(postid);
-        if (!deletedPost) {
-            return errorResponse(res, 404, "Post not found");
+        if (!mongoose.Types.ObjectId.isValid(postid)) {
+            return res.status(404).json({ success: false, message: 'Invalid post ID' });
         }
-
+        const deletedPost = await Post.findByIdAndDelete(postid);
         await Comment.deleteMany({ _id: { $in: deletedPost.comments } });
-
         await User.findByIdAndUpdate(id, {
             $pull: { blog: postid }
         });
 
-        res.status(200).json({ success:true,message: "Post and associated comments deleted successfully" });
+        res.status(201).json({ success:true,message: "Post and associated comments deleted successfully" });
     } catch (error) {
         console.error("Error deleting post:", error);
         return errorResponse(res, 500, "Server error");

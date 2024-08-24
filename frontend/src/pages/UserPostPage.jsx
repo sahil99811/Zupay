@@ -14,7 +14,7 @@ export default function UserPostPage() {
   const fetchPosts = async () => {
     try {
       dispatch(setLoading(true));
-      const result = await getUserPosts(token);
+      const result = await getUserPosts(token,dispatch);
       if (result) {
         setPosts(result.data);
       }
