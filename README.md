@@ -1,5 +1,5 @@
 # Zupay Blog Platform
-
+Zupay Blog Platform is a comprehensive blogging application that allows users to create, view, and interact with blog posts. It leverages AI to generate concise summaries of blog content, making it easier for readers to quickly grasp the key points. The platform includes user authentication, state management, and various other features to enhance the user experience.
 ## Table of Contents
 - [Project Overview](#project-overview)
 - [Accessing the Application](#Accessing-the-Application)
@@ -16,7 +16,7 @@
 
 ## Project Overview
 
-Zupay Blog Platform is a comprehensive blogging application that allows users to create, view, and interact with blog posts. It leverages AI to generate concise summaries of blog content, making it easier for readers to quickly grasp the key points. The platform includes user authentication, state management, and various other features to enhance the user experience.
+The Zupay Blog Platform is designed to provide a seamless experience for both readers and authors. It utilizes AI to automatically generate summaries of blog posts, helping users quickly understand the content. The application also includes features such as a comment system, user authentication, search functionality, and trending content display.
 
 ## Accessing the Application
 
