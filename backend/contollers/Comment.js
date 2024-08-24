@@ -25,7 +25,7 @@ const createComment = async (req, res) => {
             select: "name"
         });
 
-        res.status(200).json({
+        res.status(201).json({
             success: true,
             comment,
             message: "Comment Created Successfully..."
